@@ -13,20 +13,27 @@ auth_manager = SpotifyClientCredentials(client_id=client_id, client_secret=clien
 sp = spotipy.Spotify(auth_manager=auth_manager)
 
 def get_info(link):
+    #check what type of url
     l = link.split('/')
 
     if l[3] == "track":
         results = sp.track(link)
+        artists = []
+        for a in results['artists']:
+            artists.append(a['name'])
+
+        #track info
         track = {
             'name':results['name'],
             'release_date':results['album']['release_date'],
-            'artist':results['album']['artists'],
+            'artist':artists,
             'album_type':results['album']['album_type'],
-            'images':results['album']['images'],
+            'cover':results['album']['images'][0]['url'],
             'popularity':results['popularity'],
-            'duration':"{:.2f}".format(results['duration_ms']/1000/60)
+            'duration':"{:.2f}".format(results['duration_ms']/1000/60),
+            'url':results['external_urls']['spotify']
         }
-        print(track)
+        return track
 
     elif l[3] == "artist":
         results = sp.artist(link)
@@ -56,20 +63,20 @@ def get_info(link):
         track_list = []
 
         for t in results['tracks']['items']:
-
             #get all artists
             artists = []
             for a in t['track']['artists']:
                 artists.append(a['name'])
 
             #details of each individual track
-            trackitem = {}
-            trackitem['name'] = t['track']['name']
-            trackitem['album'] = t['track']['album']['name']
-            trackitem['release_date']=t['track']['album']['release_date']
-            trackitem['artists'] = artists
-            trackitem['album_cover'] = t['track']['album']['images'][0]['url']
-            trackitem['album_url'] = t['track']['album']['external_urls']['spotify']
+            trackitem = {
+                'name':t['track']['name'],
+                'album':t['track']['album']['name'],
+                'release_date':t['track']['album']['release_date'],
+                'artists':artists,
+                'album_cover':t['track']['album']['images'][0]['url'],
+                'album_url':t['track']['album']['external_urls']['spotify']
+            }
             track_list.append(trackitem)
 
         #final dictionary of the playlist
@@ -86,7 +93,7 @@ def get_info(link):
 
 link = input("Enter url:")
 info = get_info(link)
-print(info)
+#print(info)
     
 #print(results)
  #with open('results.txt','w') as FH:

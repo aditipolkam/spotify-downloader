@@ -1,5 +1,6 @@
 import os
 import json
+import re
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from dotenv import load_dotenv
@@ -71,15 +72,40 @@ def get_info(link):
 
     elif l[3] == "album":
         results = sp.album(link)
+        print(results)
+        tracks = []
+        album_artists = []
+        for a in results['artists']:
+                album_artists.append(a['name'])
+
+        artists = []
+        for t in results['tracks']['items']:
+
+            #get all artists
+            for a in t['artists']:
+                artists.append(a['name'])
+
+            #get all genres
+
+            trackitem = {
+                'name': t['name'],
+                'url': t['external_urls']['spotify'],
+                'artists':artists,
+            }
+
         album = {
             'name':results['name'],
             'genres':results['genres'],
-            "popularity":results['popularity'],
-            "release_date":results['release_date'],
-            "total_tracks":results['total_tracks'],
-            'tracks':results['tracks']
+            'popularity':results['popularity'],
+            'release_date':results['release_date'],
+            'total_tracks':results['total_tracks'],
+            'url':results['external_urls']['spotify'],
+            'cover':results['images'][0]['url'],
+            'label':results['label'],
+            'album_artists':album_artists,
+            'tracks':tracks
         }
-        print(album)
+        return album
 
     elif l[3] == "playlist":
         results = sp.playlist(link)

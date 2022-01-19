@@ -41,18 +41,18 @@ def get_info(link):
     elif l[3] == "artist":
         results = sp.artist(link)
         artist_top_tracks = sp.artist_top_tracks(link)
-        print(artist_top_tracks)
+        #print(artist_top_tracks)
         top_tracks = []
 
         for t in artist_top_tracks['tracks']:
             artists = []
-            for a in results['artists']:
+            for a in t['artists']:
                 artists.append(a['name'])
 
             trackitem = {
                 'id':t['id'],
                 'name':t['name'],
-                'release_date':t['release_date'],
+                'release_date':t['album']['release_date'],
                 'cover':t['album']['images'][0]['url'],
                 'artists':artists,
                 'url':t['external_urls']['spotify']
@@ -72,16 +72,14 @@ def get_info(link):
 
     elif l[3] == "album":
         results = sp.album(link)
-        print(results)
         tracks = []
         album_artists = []
         for a in results['artists']:
-                album_artists.append(a['name'])
+            album_artists.append(a['name'])
 
-        artists = []
         for t in results['tracks']['items']:
-
             #get all artists
+            artists = []
             for a in t['artists']:
                 artists.append(a['name'])
 
@@ -92,6 +90,7 @@ def get_info(link):
                 'url': t['external_urls']['spotify'],
                 'artists':artists,
             }
+            tracks.append(trackitem)
 
         album = {
             'name':results['name'],
@@ -145,7 +144,7 @@ def get_info(link):
 
 link = input("Enter url:")
 info = get_info(link)
-#print(info)
+print(info)
     
 #print(results)
  #with open('results.txt','w') as FH:

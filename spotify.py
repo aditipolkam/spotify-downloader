@@ -24,27 +24,50 @@ def get_info(link):
 
         #track info
         track = {
+            'id':results['id'],
             'name':results['name'],
             'release_date':results['album']['release_date'],
             'artist':artists,
-            'album_type':results['album']['album_type'],
+            'album_name':results['album']['name'],
             'cover':results['album']['images'][0]['url'],
             'popularity':results['popularity'],
             'duration':"{:.2f}".format(results['duration_ms']/1000/60),
-            'url':results['external_urls']['spotify']
+            'track_url':results['external_urls']['spotify'],
+            'album_url':results['album']['external_urls']['spotify']
         }
         return track
 
     elif l[3] == "artist":
         results = sp.artist(link)
-        #print(results)
+        artist_top_tracks = sp.artist_top_tracks(link)
+        print(artist_top_tracks)
+        top_tracks = []
+
+        for t in artist_top_tracks['tracks']:
+            artists = []
+            for a in results['artists']:
+                artists.append(a['name'])
+
+            trackitem = {
+                'id':t['id'],
+                'name':t['name'],
+                'release_date':t['release_date'],
+                'cover':t['album']['images'][0]['url'],
+                'artists':artists,
+                'url':t['external_urls']['spotify']
+            }
+            top_tracks.append(trackitem)
+
         artist = {
             'id':results['id'],
+            'url':results['external_urls']['spotify'],
             'name':results['name'],
             'followers':results['followers']['total'],
-            'genres':results['genres']
+            'genres':results['genres'],
+            'cover':results['images'][0]['url'],
+            'top_tracks':top_tracks
         }
-        print(artist)
+        return artist
 
     elif l[3] == "album":
         results = sp.album(link)
@@ -70,8 +93,10 @@ def get_info(link):
 
             #details of each individual track
             trackitem = {
+                'id':t['track']['id'],
                 'name':t['track']['name'],
                 'album':t['track']['album']['name'],
+                'track_url':t['track']['external_urls']['spotify'],
                 'release_date':t['track']['album']['release_date'],
                 'artists':artists,
                 'album_cover':t['track']['album']['images'][0]['url'],
@@ -81,6 +106,7 @@ def get_info(link):
 
         #final dictionary of the playlist
         playlist = {
+            'id': results['id'],
             'name': results['name'],
             'description': results['description'],
             'owner_name':results['owner']['display_name'],

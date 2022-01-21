@@ -7,7 +7,6 @@ def search_song(name):
     try:
         videoid = result[0]["videoId"]
     except KeyError or IndexError:
-        videoid=""
         print("Song not found.")
         sys.exit()
 

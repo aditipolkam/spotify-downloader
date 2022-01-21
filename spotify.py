@@ -18,7 +18,7 @@ class Spot:
                 artists.append(a['name'])
 
             #track info
-            track = {
+            tracklist = [{
                 'id':results['id'],
                 'name':results['name'],
                 'release_date':results['album']['release_date'],
@@ -29,6 +29,10 @@ class Spot:
                 'duration':"{:.2f}".format(results['duration_ms']/1000/60),
                 'track_url':results['external_urls']['spotify'],
                 'album_url':results['album']['external_urls']['spotify']
+            }]
+
+            track = {
+                'tracks': tracklist
             }
             return track
 
@@ -60,7 +64,7 @@ class Spot:
                 'followers':results['followers']['total'],
                 'genres':results['genres'],
                 'cover':results['images'][0]['url'],
-                'top_tracks':top_tracks
+                'tracks':top_tracks
             }
             return artist
 

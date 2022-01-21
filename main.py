@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from spotify import Spot
 from image_downloader import download_image
 from audio_downloader import download_audio
+from youtube_search import search_song
 
 
 load_dotenv()
@@ -21,8 +22,11 @@ name = res["name"]
 #download song cover image
 download_image(album_cover_url,name)
 
+#search the song on ytmusicapi
+track_url = search_song(name)
+
 #download song audio
-track_url = input("Enter track url:")
 download_audio(track_url,name)
+
 
 

@@ -1,7 +1,7 @@
 import urllib.request
 
-def download_image(url):
-    urllib.request.urlretrieve(url,"images/img.jpg")
-    print("download successful")
+def download_image(url, name):
+    urllib.request.urlretrieve(url,str("data/" + name + ".jpg"))
+    print("cover download successful")
 
 

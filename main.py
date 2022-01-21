@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 
 from spotify import Spot
 from image_downloader import download_image
+from audio_downloader import download_audio
+
 
 load_dotenv()
 
@@ -13,6 +15,13 @@ url = input("Enter url: ")
 res = Spot(client_id=client_id, client_secret = client_secret).get_info(url)
 #print(res)
 
-album_cover = res["cover"]
-download_image(album_cover)
+album_cover_url = res["cover"]
+name = res["name"]
+
+#download song cover image
+download_image(album_cover_url,name)
+
+
+
+
 

@@ -21,7 +21,8 @@ name = res["name"]
 #download song cover image
 download_image(album_cover_url,name)
 
-
-
+#download song audio
+track_url = input("Enter track url:")
+download_audio(track_url,name)
 
 

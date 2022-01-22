@@ -134,7 +134,3 @@ trial.py
 
 #folders
 /data
-
-#python files
-audio_converter.py
-song_tags.py

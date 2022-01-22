@@ -1,7 +1,11 @@
 import urllib.request
 
-def download_image(url, name):
-    urllib.request.urlretrieve(url,str("data/" + name + ".jpg"))
+import os
+
+def download_image(url, path, name):
+    save_path = str("data/" + name + ".jpg")
+    #print(save_path)
+    urllib.request.urlretrieve(url,save_path)
     print("cover download successful")
 
 

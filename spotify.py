@@ -22,9 +22,9 @@ class Spot:
                 'id':results['id'],
                 'name':results['name'],
                 'release_date':results['album']['release_date'],
-                'artist':artists,
-                'album_name':results['album']['name'],
-                'cover':results['album']['images'][0]['url'],
+                'artists':artists,
+                'album':results['album']['name'],
+                'album_cover':results['album']['images'][0]['url'],
                 'popularity':results['popularity'],
                 'duration':"{:.2f}".format(results['duration_ms']/1000/60),
                 'track_url':results['external_urls']['spotify'],
@@ -51,7 +51,7 @@ class Spot:
                     'id':t['id'],
                     'name':t['name'],
                     'release_date':t['album']['release_date'],
-                    'cover':t['album']['images'][0]['url'],
+                    'album_cover':t['album']['images'][0]['url'],
                     'artists':artists,
                     'url':t['external_urls']['spotify']
                 }
@@ -86,7 +86,7 @@ class Spot:
                 trackitem = {
                     'name': t['name'],
                     'url': t['external_urls']['spotify'],
-                    'artists':artists,
+                    'artists':artists
                 }
                 tracks.append(trackitem)
 
@@ -97,7 +97,7 @@ class Spot:
                 'release_date':results['release_date'],
                 'total_tracks':results['total_tracks'],
                 'url':results['external_urls']['spotify'],
-                'cover':results['images'][0]['url'],
+                'album_cover':results['images'][0]['url'],
                 'label':results['label'],
                 'album_artists':album_artists,
                 'tracks':tracks

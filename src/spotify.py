@@ -13,22 +13,17 @@ class Spot:
 
         if l[3] == "track":
             results = self.sp.track(link)
-            artists = []
+            artists = ""
             for a in results['artists']:
-                artists.append(a['name'])
+                artists = artists + f"{a['name']} "
 
             #track info
             tracklist = [{
-                'id':results['id'],
-                'name':results['name'],
+                'track_name':results['name'],
                 'release_date':results['album']['release_date'],
                 'artists':artists,
-                'album':results['album']['name'],
-                'album_cover':results['album']['images'][0]['url'],
-                'popularity':results['popularity'],
-                'duration':"{:.2f}".format(results['duration_ms']/1000/60),
-                'track_url':results['external_urls']['spotify'],
-                'album_url':results['album']['external_urls']['spotify']
+                'album_name':results['album']['name'],
+                'album_cover':results['album']['images'][0]['url']
             }]
 
             track = {
@@ -43,27 +38,23 @@ class Spot:
             top_tracks = []
 
             for t in artist_top_tracks['tracks']:
-                artists = []
+                artists = ""
                 for a in t['artists']:
-                    artists.append(a['name'])
+                    artists = artists + f"{a['name']} "
 
                 trackitem = {
-                    'id':t['id'],
-                    'name':t['name'],
+                    'track_name':t['name'],
                     'release_date':t['album']['release_date'],
+                    'album_name':t['album']['name'],
                     'album_cover':t['album']['images'][0]['url'],
-                    'artists':artists,
-                    'url':t['external_urls']['spotify']
+                    'artists':artists
                 }
                 top_tracks.append(trackitem)
 
             artist = {
-                'id':results['id'],
-                'url':results['external_urls']['spotify'],
                 'name':results['name'],
                 'followers':results['followers']['total'],
                 'genres':results['genres'],
-                'cover':results['images'][0]['url'],
                 'tracks':top_tracks
             }
             return artist
@@ -77,26 +68,23 @@ class Spot:
 
             for t in results['tracks']['items']:
                 #get all artists
-                artists = []
+                artists = ""
                 for a in t['artists']:
-                    artists.append(a['name'])
-
-                #get all genres
+                    artists = artists + f"{a['name']} "
 
                 trackitem = {
-                    'name': t['name'],
-                    'url': t['external_urls']['spotify'],
+                    'track_name':t['name'],
+                    'release_date':results['release_date'],
+                    'album_name':results['name'],
+                    'album_cover':results['images'][0]['url'],
                     'artists':artists
                 }
                 tracks.append(trackitem)
 
             album = {
                 'name':results['name'],
-                'genres':results['genres'],
-                'popularity':results['popularity'],
                 'release_date':results['release_date'],
                 'total_tracks':results['total_tracks'],
-                'url':results['external_urls']['spotify'],
                 'album_cover':results['images'][0]['url'],
                 'label':results['label'],
                 'album_artists':album_artists,
@@ -110,20 +98,17 @@ class Spot:
 
             for t in results['tracks']['items']:
                 #get all artists
-                artists = []
+                artists = ""
                 for a in t['track']['artists']:
-                    artists.append(a['name'])
+                    artists = artists + f"{a['name']} "
 
                 #details of each individual track
                 trackitem = {
-                    'id':t['track']['id'],
-                    'name':t['track']['name'],
-                    'album':t['track']['album']['name'],
-                    'track_url':t['track']['external_urls']['spotify'],
+                    'track_name':t['track']['name'],
+                    'album_name':t['track']['album']['name'],
                     'release_date':t['track']['album']['release_date'],
                     'artists':artists,
-                    'album_cover':t['track']['album']['images'][0]['url'],
-                    'album_url':t['track']['album']['external_urls']['spotify']
+                    'album_cover':t['track']['album']['images'][0]['url']
                 }
                 track_list.append(trackitem)
 
@@ -138,6 +123,4 @@ class Spot:
             }
             return playlist
         
-    #print(results)
-    #with open('results.txt','w') as FH:
-        #    jsondata = json.dump(results,FH)
+ 

@@ -1,7 +1,5 @@
-from email.mime import audio
-from ensurepip import version
-from tabnanny import verbose
 import eyed3
+import os
 
 def add_tags(file, title, album_name, release_date, artists, cover_img):
     audiofile = eyed3.load(str(file))
@@ -17,6 +15,9 @@ def add_tags(file, title, album_name, release_date, artists, cover_img):
         audiofile.tag.save(version=(1, None, None))
         audiofile.tag.save(version = (2,3,0))
         audiofile.tag.save()
+
+        #remove cover img i.e. not required
+        os.remove(cover_img)
         print("Tags embedded.")
     else:
         print("File not loaded")

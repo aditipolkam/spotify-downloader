@@ -1,5 +1,3 @@
-from fileinput import filename
-from importlib.resources import path
 import ffmpeg 
 import os
 import pathlib

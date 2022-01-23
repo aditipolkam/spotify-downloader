@@ -4,8 +4,8 @@ import ffmpeg
 import os
 import pathlib
 
-def convert_audio(inputfile,outputfile):
-    inputfile = ffmpeg.input(inputfile)
+def convert_audio(file_path, outputfile):
+    inputfile = ffmpeg.input(file_path)
     if inputfile:
         audiofile = inputfile.audio
         #os.remove('data/Heat Waves.mp3')

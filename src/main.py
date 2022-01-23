@@ -62,7 +62,7 @@ for track in res['tracks']:
 
     #add tags to audio file
     final_path = os.path.join(save_path,f"{name}.mp3")
-    add_tags(final_path, name)
+    add_tags(final_path, name, album_name, release_date, artists, cover_img)
 
 
 

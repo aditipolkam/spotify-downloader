@@ -32,7 +32,7 @@ for track in res["tracks"]:
     release_date = track["release_date"]
     artists = track["artists"]
     name = track["track_name"] + " - " + artists
-    name = name.strip("[]").strip('"').replace('"', "")
+    name = name.replace('"', "")
 
     if f"{name}.mp3" in os.listdir(save_path):
         overwrite = input(

@@ -27,11 +27,12 @@ res = Spot(client_id=client_id, client_secret=client_secret).get_info(url)
 
 for track in res["tracks"]:
     # get data for track
-    name = track["track_name"]
+
     album_name = track["album_name"]
     album_cover_url = track["album_cover"]
     release_date = track["release_date"]
     artists = track["artists"]
+    name = track["track_name"] + " - " + artists
 
     if f"{name}.mp3" in os.listdir(save_path):
         overwrite = input(

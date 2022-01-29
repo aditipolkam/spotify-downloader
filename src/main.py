@@ -24,7 +24,6 @@ url = input("Enter url: ")
 res = Spot(client_id=client_id, client_secret=client_secret).get_info(url)
 # print(res)
 
-
 for track in res["tracks"]:
     # get data for track
 
@@ -33,6 +32,7 @@ for track in res["tracks"]:
     release_date = track["release_date"]
     artists = track["artists"]
     name = track["track_name"] + " - " + artists
+    name = name.strip("[]").strip('"').replace('"', "")
 
     if f"{name}.mp3" in os.listdir(save_path):
         overwrite = input(
